@@ -15,6 +15,7 @@ public class GUI extends JFrame {
     
     public GUI() {
         this.logics = new LogicsImpl(SIZE);
+        this.logics.setPieceLogic(new KnightLogic());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(100*SIZE, 100*SIZE);
         
@@ -46,7 +47,7 @@ public class GUI extends JFrame {
     private void draw() {
     	for (Entry<JButton,Pair<Integer,Integer>> entry: this.buttons.entrySet()) {
     		String str = logics.hasPawn(entry.getValue().getX(), entry.getValue().getY()) ? "*" :
-    					 logics.hasKnight(entry.getValue().getX(), entry.getValue().getY()) ? "K" : " ";
+    					 logics.hasMovingPiece(entry.getValue().getX(), entry.getValue().getY()) ? "K" : " ";
     		entry.getKey().setText(str);
     	}
     }
