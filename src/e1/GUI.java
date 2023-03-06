@@ -1,13 +1,14 @@
 package e1;
 
 import javax.swing.*;
+import java.io.Serial;
 import java.util.*;
 import java.util.Map.Entry;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class GUI extends JFrame {
-    
+    @Serial
     private static final long serialVersionUID = -6218820567019985015L;
     private final Map<JButton,Pair<Integer,Integer>> buttons = new HashMap<>();
     private final Logics logics;
@@ -25,7 +26,7 @@ public class GUI extends JFrame {
         ActionListener al = (e)->{
             final JButton bt = (JButton)e.getSource();
             final Pair<Integer,Integer> pos = buttons.get(bt);
-            if (logics.hit(pos.getX(),pos.getY())) {
+            if (logics.hit(pos)) {
             	System.exit(0);
             } else {
                 draw();            	

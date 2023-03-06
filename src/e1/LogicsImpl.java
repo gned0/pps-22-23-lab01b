@@ -34,14 +34,13 @@ public class LogicsImpl implements Logics {
     }
     
 	@Override
-	public boolean hit(int row, int col) {
-		Pair<Integer,Integer> move = new Pair<>(row, col);
-		if (row<0 || col<0 || row >= this.size || col >= this.size) {
+	public boolean hit(Pair<Integer,Integer> move) {
+		if (move.getX()<0 || move.getY()<0 || move.getX() >= this.size || move.getY() >= this.size) {
 			throw new IndexOutOfBoundsException();
 		}
 		if(movingPieceLogic.canMove(move, movingPiece)) {
 			movingPiece = move;
-			return movingPieceLogic.hit(move, movingPiece, pawn);
+			return movingPieceLogic.hit(movingPiece, pawn);
 		}
 		return false;
 	}

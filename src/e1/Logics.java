@@ -1,15 +1,13 @@
 package e1;
 
 public interface Logics{
-    
+
+
     /**
-     * attempt to move Knight on position row,col, if possible
-     * 
-     * @param row
-     * @param col
-     * @return whether the pawn has been hit 
+     * @param move
+     * @return
      */
-    boolean hit(int row, int col);
+    boolean hit(Pair<Integer,Integer> move);
     
     /**
      * @param row

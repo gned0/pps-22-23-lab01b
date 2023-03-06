@@ -1,8 +1,6 @@
 package e1;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,18 +19,18 @@ class LogicsTest {
 
     @Test
     void testHit() {
-        assertTrue(logics.hit(0, 0));
+        assertTrue(logics.hit(new Pair<>(0, 0)));
     }
 
     @Test
     void testMiss() {
-        assertFalse(logics.hit(2, 4));
+        assertFalse(logics.hit(new Pair<>(2, 4)));
     }
 
     @Test
     void testMovementBoundaries() {
-        assertThrows(IndexOutOfBoundsException.class, ()->logics.hit(-1, -1));
-        assertThrows(IndexOutOfBoundsException.class, ()->logics.hit(SIZE + 1, SIZE + 1));
+        assertThrows(IndexOutOfBoundsException.class, ()->logics.hit(new Pair<>(-1, -1)));
+        assertThrows(IndexOutOfBoundsException.class, ()->logics.hit(new Pair<>(SIZE+1, SIZE+1)));
     }
 
     @Test

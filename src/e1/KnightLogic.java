@@ -3,7 +3,7 @@ package e1;
 public class KnightLogic implements PieceLogic{
 
     @Override
-    public boolean hit(Pair<Integer, Integer> move, Pair<Integer, Integer> movingPiece, Pair<Integer, Integer> pawn) {
+    public boolean hit(Pair<Integer, Integer> movingPiece, Pair<Integer, Integer> pawn) {
         return pawn.equals(movingPiece);
     }
 
