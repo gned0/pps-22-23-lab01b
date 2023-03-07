@@ -10,17 +10,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LogicsTest {
 
-    private final static int SIZE = 7;
+    private final static int SIZE = 3;
     private final static int NUMBER_OF_MINES = 1;
     private Logics logics;
-    private List<Pair<Integer, Integer>> minesPoisitions;
+    private List<Pair<Integer, Integer>> mines;
 
     @BeforeEach
     void setUp() {
-        minesPoisitions = new ArrayList<Pair<Integer, Integer>>();
-        minesPoisitions.add(new Pair<>(0, 0));
-        minesPoisitions.add(new Pair<>(1, 1));
-        logics = new LogicsImpl(SIZE, minesPoisitions);
+        mines = new ArrayList<Pair<Integer, Integer>>();
+        mines.add(new Pair<>(0, 0));
+        logics = new LogicsImpl(SIZE, mines);
     }
 
     @Test
@@ -39,8 +38,29 @@ class LogicsTest {
     }
 
     @Test
+    void testComputeAdjacentTiles() {
+        List<Pair<Integer, Integer>> adjacentTiles = new ArrayList<Pair<Integer, Integer>>();
+        adjacentTiles.add(new Pair<>(0, 1));
+        adjacentTiles.add(new Pair<>(1, 0));
+        adjacentTiles.add(new Pair<>(1, 1));
+        assertEquals(adjacentTiles, this.logics.computeAdjacentTiles(new Pair<>(0, 0)));
+    }
+
+    @Test
     void testComputeAdjacentMines() {
-        assertEquals(2, logics.computeAdjacentMines(new Pair<>(0, 1)).size());
-        assertEquals(minesPoisitions, logics.computeAdjacentMines(new Pair<>(0, 1)));
+        assertEquals(1, logics.computeAdjacentMines(new Pair<>(0, 1)).size());
+        assertEquals(mines, logics.computeAdjacentMines(new Pair<>(0, 1)));
+    }
+
+    @Test
+    void testRecursiveCountersGeneration() {
+        this.logics.addCounters(new Pair<>(2, 2));
+        assertEquals(5, this.logics.getCounters().size());
+    }
+
+    @Test
+    void testFlagPlacement() {
+        this.logics.addFlag(new Pair<>(2, 2));
+        assertEquals(1, this.logics.getFlags().size());
     }
 }

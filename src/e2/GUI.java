@@ -4,21 +4,22 @@ import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;
 
+import java.io.Serial;
 import java.util.*;
 import java.util.List;
-import java.util.Map.Entry;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 public class GUI extends JFrame {
     
+    @Serial
     private static final long serialVersionUID = -6218820567019985015L;
     private final Map<JButton,Pair<Integer,Integer>> buttons = new HashMap<>();
     private final Logics logics;
     
     public GUI(int size, int numberOfMines) {
-        List<Pair<Integer, Integer>> minesPoisitions = new ArrayList<Pair<Integer, Integer>>();
+        List<Pair<Integer, Integer>> minesPoisitions = new ArrayList<>();
         minesPoisitions.add(new Pair<>(0, 0));
         minesPoisitions.add(new Pair<>(1, 1));
         minesPoisitions.add(new Pair<>(2, 2));
@@ -32,14 +33,12 @@ public class GUI extends JFrame {
         ActionListener onClick = (e)->{
             final JButton bt = (JButton)e.getSource();
             final Pair<Integer,Integer> pos = buttons.get(bt);
-            boolean aMineWasFound = logics.hit(pos); // call the logic here to tell it that cell at 'pos' has been seleced
+            boolean aMineWasFound = logics.hit(pos); // call the logic here to tell it that cell at 'pos' has been selected
             if (aMineWasFound) {
                 quitGame();
                 JOptionPane.showMessageDialog(this, "Game over");
             } else {
-                bt.setEnabled(false);
-                String string = Integer.valueOf(logics.computeAdjacentMines(pos).size()).toString();
-                bt.setText(string);
+                this.logics.addCounters(pos);
                 drawBoard();
             }
             boolean isThereVictory = false; // call the logic here to ask if there is victory
@@ -81,7 +80,7 @@ public class GUI extends JFrame {
             // call the logic here
             // if this button is a mine, draw it "*"
             // disable the button
-            if(logics.getMinesPoisitions().contains(entry.getValue())) {
+            if(logics.getMines().contains(entry.getValue())) {
                 String string = "*";
                 entry.getKey().setText(string);
                 entry.getKey().setEnabled(false);
@@ -94,7 +93,11 @@ public class GUI extends JFrame {
             // call the logic here
             // if this button is a cell with counter, put the number
             // if this button has a flag, put the flag
-
+            if(logics.getCounters().contains(entry.getValue())) {
+                String string = Integer.valueOf(this.logics.computeAdjacentMines(entry.getValue()).size()).toString();
+                entry.getKey().setText(string);
+                entry.getKey().setEnabled(false);
+            }
     	}
     }
     
