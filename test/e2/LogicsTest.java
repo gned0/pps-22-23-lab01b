@@ -55,7 +55,7 @@ class LogicsTest {
     @Test
     void testRecursiveCountersGeneration() {
         this.logics.addCounters(new Pair<>(2, 2));
-        assertEquals(5, this.logics.getCounters().size());
+        assertEquals(8, this.logics.getCounters().size());
     }
 
     @Test

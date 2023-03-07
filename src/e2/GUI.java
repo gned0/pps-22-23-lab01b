@@ -55,7 +55,7 @@ public class GUI extends JFrame {
                 final JButton bt = (JButton)e.getSource();
                 if (bt.isEnabled()){
                     final Pair<Integer,Integer> pos = buttons.get(bt);
-                    // call the logic here to put/remove a flag
+                    logics.addFlag(pos);
                 }
                 drawBoard();
             }
@@ -93,6 +93,10 @@ public class GUI extends JFrame {
             // call the logic here
             // if this button is a cell with counter, put the number
             // if this button has a flag, put the flag
+            if(logics.getFlags().contains(entry.getValue())) {
+                String string = "F";
+                entry.getKey().setText(string);
+            }
             if(logics.getCounters().contains(entry.getValue())) {
                 String string = Integer.valueOf(this.logics.computeAdjacentMines(entry.getValue()).size()).toString();
                 entry.getKey().setText(string);

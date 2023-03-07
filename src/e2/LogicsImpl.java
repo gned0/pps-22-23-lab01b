@@ -1,21 +1,32 @@
 package e2;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class LogicsImpl implements Logics {
 
     private final int size;
     private List<Pair<Integer, Integer>> mines;
-    List<Pair<Integer, Integer>> counters = new ArrayList<>();
-    List<Pair<Integer, Integer>> flags = new ArrayList<>();
+    private Set<Pair<Integer, Integer>> counters = new HashSet<>();
+    private List<Pair<Integer, Integer>> flags = new ArrayList<>();
+    private final Random random = new Random();
     public LogicsImpl(int size, int numberOfMines) {
         this.size = size;
+        this.mines = new ArrayList<>();
+        for(int i=0; i<numberOfMines; i++) {
+            this.mines.add(new Pair<>(this.random.nextInt(size),this.random.nextInt(size)));
+        }
     }
+
     public LogicsImpl(int size, List<Pair<Integer, Integer>> mines) {
         this.size = size;
         this.mines = mines;
+    }
+
+    private Pair<Integer,Integer> randomEmptyPosition(){
+        Pair<Integer,Integer> pos = new Pair<>(this.random.nextInt(size),this.random.nextInt(size));
+        // the recursive call below prevents clash with an existing pawn
+        return this.mines!=null && this.mines.equals(pos) ? randomEmptyPosition() : pos;
     }
 
     @Override
@@ -23,7 +34,7 @@ public class LogicsImpl implements Logics {
         return mines;
     }
 
-    public List<Pair<Integer, Integer>> getCounters() {
+    public Set<Pair<Integer, Integer>> getCounters() {
         return counters;
     }
 
@@ -36,10 +47,7 @@ public class LogicsImpl implements Logics {
         if (!this.isInBoundaries(position)) {
             throw new IndexOutOfBoundsException();
         }
-        for(Pair<Integer, Integer> elem : mines){
-            if(elem.equals(position)) return true;
-        }
-        return false;
+        return mines.contains(position);
     }
 
     @Override
@@ -69,10 +77,9 @@ public class LogicsImpl implements Logics {
         if(this.computeAdjacentMines(position).size() == 0) {
             for(var elem : adjacentTiles) {
                 if(!this.counters.contains(elem)){
-                    this.addCounters(elem);
                     this.counters.add(elem);
+                    this.addCounters(elem);
                 }
-
             }
         }
     }
