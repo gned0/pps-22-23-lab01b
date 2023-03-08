@@ -4,7 +4,7 @@ import e1.Pair;
 
 public abstract class AbstractMovingPiece implements MovingPiece{
 
-    Pair<Integer, Integer> position;
+    private Pair<Integer, Integer> position;
 
     public AbstractMovingPiece(Pair<Integer, Integer> startingPosition){
         this.position = startingPosition;
@@ -15,13 +15,17 @@ public abstract class AbstractMovingPiece implements MovingPiece{
     }
 
     @Override
-    public boolean hit(Pair<Integer, Integer> newPosition, Pair<Integer, Integer> pawn) {
+    public void move(Pair<Integer, Integer> newPosition) {
         if(this.canMove(newPosition)) {
             this.position = newPosition;
-            return this.position.equals(pawn);
         }
-        return false;
     }
 
+    /**
+     * This method is used within template method "move" and will be implemented by concrete classes
+     * that extend this abstract class
+     * @param newPosition position in which to move
+     * @return True if according to piece logic it can move to newPosition, false otherwise
+     */
     protected abstract boolean canMove(Pair<Integer, Integer> newPosition);
 }

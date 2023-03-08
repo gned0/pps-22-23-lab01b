@@ -32,11 +32,13 @@ public class LogicsImpl implements Logics {
     }
     
 	@Override
-	public boolean hit(Pair<Integer,Integer> move) {
-		if (move.getX()<0 || move.getY()<0 || move.getX() >= this.size || move.getY() >= this.size) {
+	public boolean hit(Pair<Integer,Integer> newPosition) {
+		if (newPosition.getX()<0 || newPosition.getY()<0 ||
+				newPosition.getX() >= this.size || newPosition.getY() >= this.size) {
 			throw new IndexOutOfBoundsException();
 		}
-		return this.movingPiece.hit(move, pawn);
+		this.movingPiece.move(newPosition);
+		return this.movingPiece.getPosition().equals(pawn);
 	}
 
 	@Override
