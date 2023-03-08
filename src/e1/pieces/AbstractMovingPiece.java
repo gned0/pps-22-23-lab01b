@@ -13,9 +13,6 @@ public abstract class AbstractMovingPiece implements MovingPiece{
     public Pair<Integer, Integer> getPosition() {
         return this.position;
     }
-    public void setPosition(Pair<Integer, Integer> newPosition) {
-        this.position = newPosition;
-    }
 
     @Override
     public boolean hit(Pair<Integer, Integer> newPosition, Pair<Integer, Integer> pawn) {

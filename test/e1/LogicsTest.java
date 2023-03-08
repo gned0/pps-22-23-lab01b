@@ -33,12 +33,12 @@ class LogicsTest {
     }
 
     @Test
-    void hasPawn() {
+    void testHasPawn() {
         assertTrue(logics.hasPawn(this.pawnInitialPosition.getX(), this.pawnInitialPosition.getY()));
     }
 
     @Test
-    void hasMovingPiece() {
+    void testHasMovingPiece() {
         assertTrue(logics.hasMovingPiece(this.movingPieceInitialPosition.getX(),
                    this.movingPieceInitialPosition.getY()));
     }

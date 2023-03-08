@@ -1,6 +1,5 @@
 package e1;
 
-import e1.pieces.AbstractMovingPiece;
 import e1.pieces.Knight;
 import e1.pieces.MovingPiece;
 
@@ -11,7 +10,7 @@ public class LogicsImpl implements Logics {
 	private final Pair<Integer,Integer> pawn;
 	private final Random random = new Random();
 	private final int size;
-	private MovingPiece movingPiece;
+	private final MovingPiece movingPiece;
 	 
     public LogicsImpl(int size){
     	this.size = size;
@@ -26,7 +25,7 @@ public class LogicsImpl implements Logics {
 		this.movingPiece = new Knight(knightInitialPosition);
 	}
 
-	private final Pair<Integer,Integer> randomEmptyPosition(){
+	private Pair<Integer,Integer> randomEmptyPosition(){
     	Pair<Integer,Integer> pos = new Pair<>(this.random.nextInt(size),this.random.nextInt(size));
     	// the recursive call below prevents clash with an existing pawn
     	return this.pawn!=null && this.pawn.equals(pos) ? randomEmptyPosition() : pos;
