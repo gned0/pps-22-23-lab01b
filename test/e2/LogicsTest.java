@@ -1,5 +1,8 @@
 package e2;
 
+import e2.logic.Logics;
+import e2.logic.LogicsImpl;
+import e2.structures.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,17 +27,17 @@ class LogicsTest {
 
     @Test
     void testMineHit() {
-        assertTrue(logics.hit(new Pair<>(0, 0)));
+        assertTrue(logics.mineHit(new Pair<>(0, 0)));
     }
     @Test
     void testMineMiss() {
-        assertFalse(logics.hit(new Pair<>(0, 1)));
+        assertFalse(logics.mineHit(new Pair<>(0, 1)));
     }
 
     @Test
     void testBoundaries() {
-        assertThrows(IndexOutOfBoundsException.class, ()-> logics.hit(new Pair<>(-1, -1)));
-        assertThrows(IndexOutOfBoundsException.class, ()-> logics.hit(new Pair<>(SIZE+1, SIZE+1)));
+        assertThrows(IndexOutOfBoundsException.class, ()-> logics.mineHit(new Pair<>(-1, -1)));
+        assertThrows(IndexOutOfBoundsException.class, ()-> logics.mineHit(new Pair<>(SIZE+1, SIZE+1)));
     }
 
     @Test
@@ -62,5 +65,11 @@ class LogicsTest {
     void testFlagPlacement() {
         this.logics.addFlag(new Pair<>(2, 2));
         assertEquals(1, this.logics.getFlags().size());
+    }
+
+    @Test
+    void testWindCondition() {
+        this.logics.addCounters(new Pair<>(2, 2));
+        assertTrue(this.logics.isGameWon());
     }
 }

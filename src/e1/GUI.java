@@ -16,7 +16,6 @@ public class GUI extends JFrame {
     
     public GUI() {
         this.logics = new LogicsImpl(SIZE);
-        this.logics.setPieceLogic(new KnightLogic());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(100*SIZE, 100*SIZE);
         

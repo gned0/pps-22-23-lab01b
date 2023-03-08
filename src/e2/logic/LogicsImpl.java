@@ -1,4 +1,6 @@
-package e2;
+package e2.logic;
+
+import e2.structures.Pair;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,7 +16,7 @@ public class LogicsImpl implements Logics {
         this.size = size;
         this.mines = new ArrayList<>();
         for(int i=0; i<numberOfMines; i++) {
-            this.mines.add(new Pair<>(this.random.nextInt(size),this.random.nextInt(size)));
+            this.mines.add(this.randomEmptyPosition());
         }
     }
 
@@ -43,12 +45,20 @@ public class LogicsImpl implements Logics {
     }
 
     @Override
-    public boolean hit(Pair<Integer, Integer> position) {
+    public boolean mineHit(Pair<Integer, Integer> position) {
         if (!this.isInBoundaries(position)) {
             throw new IndexOutOfBoundsException();
         }
         return mines.contains(position);
     }
+
+    @Override
+    public boolean isGameWon() {
+        var totalTiles = size*size;
+        System.out.println(totalTiles - counters.size());
+        return (totalTiles - counters.size()) == mines.size();
+    }
+
 
     @Override
     public List<Pair<Integer, Integer>> computeAdjacentMines(Pair<Integer, Integer> position) {

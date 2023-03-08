@@ -1,5 +1,7 @@
 package e2;
 
+import e2.presentation.GUI;
+
 public class Main {
 
     private final static int SIZE = 7;

@@ -14,7 +14,6 @@ class LogicsTest {
     @BeforeEach
     void beforeEach() {
         this.logics = new LogicsImpl(SIZE, pawnInitialPosition, movingPieceInitialPosition);
-        this.logics.setPieceLogic(new KnightLogic());
     }
 
     @Test

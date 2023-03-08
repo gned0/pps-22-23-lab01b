@@ -23,5 +23,4 @@ public interface Logics{
      */
     boolean hasPawn(int row, int col);
 
-    void setPieceLogic(PieceLogic pieceLogic);
 }

@@ -1,4 +1,8 @@
-package e2;
+package e2.presentation;
+
+import e2.logic.Logics;
+import e2.logic.LogicsImpl;
+import e2.structures.Pair;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
@@ -15,7 +19,7 @@ public class GUI extends JFrame {
     
     @Serial
     private static final long serialVersionUID = -6218820567019985015L;
-    private final Map<JButton,Pair<Integer,Integer>> buttons = new HashMap<>();
+    private final Map<JButton, Pair<Integer,Integer>> buttons = new HashMap<>();
     private final Logics logics;
     
     public GUI(int size, int numberOfMines) {
@@ -23,7 +27,7 @@ public class GUI extends JFrame {
         minesPoisitions.add(new Pair<>(0, 0));
         minesPoisitions.add(new Pair<>(1, 1));
         minesPoisitions.add(new Pair<>(2, 2));
-        this.logics = new LogicsImpl(size, minesPoisitions);
+        this.logics = new LogicsImpl(size, 5);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(100*size, 100*size);
         
@@ -33,15 +37,16 @@ public class GUI extends JFrame {
         ActionListener onClick = (e)->{
             final JButton bt = (JButton)e.getSource();
             final Pair<Integer,Integer> pos = buttons.get(bt);
-            boolean aMineWasFound = logics.hit(pos); // call the logic here to tell it that cell at 'pos' has been selected
+            boolean aMineWasFound = logics.mineHit(pos); // call the logic here to tell it that cell at 'pos' has been selected
             if (aMineWasFound) {
                 quitGame();
                 JOptionPane.showMessageDialog(this, "Game over");
+                System.exit(0);
             } else {
                 this.logics.addCounters(pos);
                 drawBoard();
             }
-            boolean isThereVictory = false; // call the logic here to ask if there is victory
+            boolean isThereVictory = this.logics.isGameWon(); // call the logic here to ask if there is victory
             if (isThereVictory){
                 quitGame();
                 JOptionPane.showMessageDialog(this, "You won!!");
